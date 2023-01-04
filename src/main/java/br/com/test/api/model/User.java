@@ -3,10 +3,10 @@ package br.com.test.api.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Getter
 @Setter
 @Entity
+@Table(name = "usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
