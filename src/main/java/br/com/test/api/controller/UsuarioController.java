@@ -10,37 +10,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import br.com.test.api.dto.UserDto;
+import br.com.test.api.dto.UsuarioDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
-public interface UserController {
+public interface UsuarioController {
 
 	@GetMapping("/{id}")
-	@Operation(summary = "Retorna User correspondente ao identificador recuperado por parametro")
+	@Operation(summary = "Retorna Usuario correspondente ao identificador recuperado por parametro")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))})
-	ResponseEntity<UserDto> findById(@PathVariable Integer id);
+	ResponseEntity<UsuarioDto> findById(@PathVariable Integer id);
 
 	@GetMapping
-	@Operation(summary = "Retorna a lista de User")
+	@Operation(summary = "Retorna a lista de Usuario")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))})
-	ResponseEntity<List<UserDto>> findAll();
+	ResponseEntity<List<UsuarioDto>> findAll();
 
 	@PostMapping
-	@Operation(summary = "Método responsável por criar User")
+	@Operation(summary = "Método responsável por criar Usuario")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "devolvera no headers do request o caminho de acesso")})
-	ResponseEntity<UserDto> create(@Valid @RequestBody UserDto dto);
+	ResponseEntity<UsuarioDto> create(@Valid @RequestBody UsuarioDto dto);
 	
 	@PutMapping("/{id}")
-	@Operation(summary = "Método responsável por alterar User")
+	@Operation(summary = "Método responsável por alterar Usuario")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))})
-	ResponseEntity<UserDto> update(@PathVariable Integer id, @Valid @RequestBody UserDto dto);
+	ResponseEntity<UsuarioDto> update(@PathVariable Integer id, @Valid @RequestBody UsuarioDto dto);
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Método responsável por excluir User pelo id")
+	@Operation(summary = "Método responsável por excluir Usuario pelo id")
 	@ApiResponses(value = { @ApiResponse(responseCode = "204", description = "Não retorna nada!")})
 	ResponseEntity<Void> delete(@PathVariable Integer id);
 }

@@ -1,7 +1,7 @@
 package br.com.test.api.config;
 
-import br.com.test.api.model.User;
-import br.com.test.api.repository.UserRepository;
+import br.com.test.api.model.Usuario;
+import br.com.test.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +13,12 @@ import java.util.Arrays;
 @AllArgsConstructor
 @Profile("test")
 public class TestConfig {
-	private final UserRepository repository;
+	private final UsuarioRepository repository;
 	@Bean
 	void CreateDados() {	
 
-		var u1 = new User(null, "jefferson", "007", "jefferson@gmail.com");
-		var u2 = new User(null, "maria", "004", "maria@email.com");
+		var u1 = new Usuario(null, "jefferson", "007", "jefferson@gmail.com");
+		var u2 = new Usuario(null, "maria", "004", "maria@gmail.com");
 		repository.saveAll(Arrays.asList(u1, u2));
 	}
 }

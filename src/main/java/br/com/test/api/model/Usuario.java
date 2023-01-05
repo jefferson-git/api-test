@@ -6,11 +6,10 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class Usuario {
 
     @Id
     @EqualsAndHashCode.Include
