@@ -1,10 +1,12 @@
 package br.com.test.api.controller.implement;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.test.api.config.ModelMapperConfig;
 import br.com.test.api.controller.UserController;
@@ -27,26 +29,24 @@ public class UserControllerImpl implements UserController{
 
 	@Override
 	public ResponseEntity<List<UserDto>> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return ResponseEntity.ok().body(service.findAll().stream().map(x -> model.mapper().map(x, UserDto.class)).collect(Collectors.toList()));
 	}
 
 	@Override
 	public ResponseEntity<UserDto> create(UserDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+				.buildAndExpand(model.mapper().map(service.create(dto), UserDto.class).getId()).toUri()).build();
 	}
 
 	@Override
 	public ResponseEntity<UserDto> update(Integer id, UserDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return ResponseEntity.ok().body(model.mapper().map(service.update(id, dto), UserDto.class));
 	}
 
 	@Override
 	public ResponseEntity<Void> delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

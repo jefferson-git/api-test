@@ -16,10 +16,13 @@ public class User {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
     @Column(nullable = false)
-    private String name;
+    private String nome;
+    
     @Column(nullable = false)
     private String password;
+    
     @Column(nullable = false, unique = true)
     private String email;
 }
