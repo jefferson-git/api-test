@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,8 +58,8 @@ class UsuarioServiceImplTest {
     }
 
     @Test
-    void whenFindByIdThenReturnAndObjectNotFoundExceprion(){
-        when(repository.findById(anyInt())).thenThrow( new ObjectNotFoundException("Usuário não encontrado com id:" + ID));
+    void whenFindByIdThenReturnAndObjectNotFoundException(){
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Usuário não encontrado com id:" + ID));
 
         try {
             service.findById(ID);
@@ -68,7 +69,17 @@ class UsuarioServiceImplTest {
         }
     }
     @Test
-    void findAll() {
+    void whenFindAllThemReturnAnListOfUsuario() {
+        when(repository.findAll()).thenReturn(List.of(usuario));
+        List<Usuario> response = service.findAll();
+
+        assertNotNull(response);
+        assertEquals(1, response.size());
+        assertEquals(Usuario.class, response.get(0).getClass());
+        assertEquals(ID, response.get(0).getId());
+        assertEquals(NOME, response.get(0).getNome());
+        assertEquals(EMAIL, response.get(0).getEmail());
+
     }
 
     @Test
