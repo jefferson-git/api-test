@@ -1,9 +1,9 @@
 package br.com.test.api.service;
 
+import java.util.List;
+
 import br.com.test.api.dto.UsuarioDto;
 import br.com.test.api.model.Usuario;
-
-import java.util.List;
 
 public interface UsuarioService {
     Usuario findById(Integer id);
