@@ -4,6 +4,7 @@ import br.com.test.api.config.ModelMapperConfig;
 import br.com.test.api.dto.UsuarioDto;
 import br.com.test.api.model.Usuario;
 import br.com.test.api.repository.UsuarioRepository;
+import br.com.test.api.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,6 +56,17 @@ class UsuarioServiceImplTest {
         assertEquals(EMAIL, response.getEmail());
     }
 
+    @Test
+    void whenFindByIdThenReturnAndObjectNotFoundExceprion(){
+        when(repository.findById(anyInt())).thenThrow( new ObjectNotFoundException("Usuário não encontrado com id:" + ID));
+
+        try {
+            service.findById(ID);
+        }catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Usuário não encontrado com id:" + ID, ex.getMessage());
+        }
+    }
     @Test
     void findAll() {
     }
