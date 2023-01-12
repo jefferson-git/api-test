@@ -1,14 +1,15 @@
 package br.com.test.api.service.implement;
 
-import br.com.test.api.config.ModelMapperConfig;
 import br.com.test.api.dto.UsuarioDto;
 import br.com.test.api.model.Usuario;
 import br.com.test.api.repository.UsuarioRepository;
+import br.com.test.api.service.exception.IntegrityConstraintViolationException;
 import br.com.test.api.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 @SpringBootTest
 class UsuarioServiceImplTest {
@@ -26,14 +28,14 @@ class UsuarioServiceImplTest {
     public static final String PASSWORD = "123";
     public static final String EMAIL    = "jefin@gmail";
     
-    @Autowired
+    @InjectMocks
     private UsuarioServiceImpl service;
 
     @Mock
     private UsuarioRepository repository;
 
     @Mock
-    private ModelMapperConfig model;
+    private ModelMapper mapper;
 
     private Usuario usuario;
     private UsuarioDto dto;
@@ -41,6 +43,7 @@ class UsuarioServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        openMocks(this);
         startUsuario();
     }
 
@@ -92,6 +95,48 @@ class UsuarioServiceImplTest {
         assertEquals(ID, response.getId());
         assertEquals(NOME, response.getNome());
         assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+    }
+
+    @Test
+    void whenCreateThenReturnAnIntegrityConstraintViolationException() {
+        when(repository.findByEmail(anyString())).thenReturn(optional);
+        var response = service.create(dto);
+
+        try{
+            optional.get().setId(2);
+            service.create(dto);
+        }catch (Exception ex){
+            assertEquals(IntegrityConstraintViolationException.class, ex.getClass());
+            assertEquals("Esse email já está em uso!", ex.getMessage());
+        }
+    }
+
+    @Test
+    void whenUpdateThenReturnSuccess() {
+        when(repository.save(any())).thenReturn(usuario);
+        var response = service.update(ID, dto);
+
+        assertNotNull(response);
+        assertEquals(Usuario.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NOME, response.getNome());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
+    }
+
+    @Test
+    void whenUpdateThenReturnAnIntegrityConstraintViolationException() {
+        when(repository.findByEmail(anyString())).thenReturn(optional);
+        var response = service.update(ID, dto);
+
+        try{
+            optional.get().setId(2);
+            service.create(dto);
+        }catch (Exception ex){
+            assertEquals(IntegrityConstraintViolationException.class, ex.getClass());
+            assertEquals("Esse email já está em uso!", ex.getMessage());
+        }
     }
 
     @Test

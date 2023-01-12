@@ -1,6 +1,5 @@
 package br.com.test.api.service.implement;
 
-import br.com.test.api.config.ModelMapperConfig;
 import br.com.test.api.dto.UsuarioDto;
 import br.com.test.api.model.Usuario;
 import br.com.test.api.repository.UsuarioRepository;
@@ -8,17 +7,20 @@ import br.com.test.api.service.UsuarioService;
 import br.com.test.api.service.exception.IntegrityConstraintViolationException;
 import br.com.test.api.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Getter
 @Service
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 	
-    private final UsuarioRepository repository;
-    private final ModelMapperConfig model;
+    private UsuarioRepository repository;
+
+    private ModelMapper model;
     
     @Override
     public Usuario findById(Integer id) {
@@ -34,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario create(UsuarioDto dto) {    	
     	
     	verificaEmail(dto);
-        return repository.save(model.mapper().map(dto, Usuario.class));
+        return repository.save(model.map(dto, Usuario.class));
     }
 
     @Override
@@ -42,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     	
     	dto.setId(id);       	
     	verificaEmail(dto);    	
-        return repository.save(model.mapper().map(dto, Usuario.class));
+        return repository.save(model.map(dto, Usuario.class));
     }
 
     @Override
