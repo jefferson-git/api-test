@@ -101,7 +101,6 @@ class UsuarioServiceImplTest {
     @Test
     void whenCreateThenReturnAnIntegrityConstraintViolationException() {
         when(repository.findByEmail(anyString())).thenReturn(optional);
-        var response = service.create(dto);
 
         try{
             optional.get().setId(2);
@@ -127,9 +126,8 @@ class UsuarioServiceImplTest {
 
     @Test
     void whenUpdateThenReturnAnIntegrityConstraintViolationException() {
-        when(repository.findByEmail(anyString())).thenReturn(optional);
-        var response = service.update(ID, dto);
-
+    	when(repository.findByEmail(anyString())).thenReturn(optional);
+        
         try{
             optional.get().setId(2);
             service.create(dto);
@@ -140,15 +138,23 @@ class UsuarioServiceImplTest {
     }
 
     @Test
-    void update() {
+    void deleteWithSuccess() {
+        when(repository.findById(anyInt())).thenReturn(optional);
+        doNothing().when(repository).delete(any());
+        service.delete(ID);
+        verify(repository, times(1)).delete(any());       
     }
-
+    
     @Test
-    void delete() {
-    }
-
-    @Test
-    void verificaEmail() {
+    void deleteWithObjectNotFoundException() {
+    	when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Usuário não encontrado com id:" + ID));
+    	
+    	try {
+    		service.delete(ID);
+		} catch (Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals("Usuário não encontrado com id:" + ID, ex.getMessage());
+		}     
     }
 
     private void startUsuario(){
