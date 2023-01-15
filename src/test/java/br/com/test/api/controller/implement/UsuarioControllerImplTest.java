@@ -50,7 +50,7 @@ class UsuarioControllerImplTest {
 
 
     @Test
-    @DisplayName("Get Usuario - Success Scenario")
+    @DisplayName("Get - Busca por usuário pelo id")
     void whenFindByIdThenSuccess() {
         when(service.findById(anyInt())).thenReturn(usuario);
         when(model.map(any(), any())).thenReturn(dto);
@@ -59,6 +59,7 @@ class UsuarioControllerImplTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(UsuarioDto.class, response.getBody().getClass());
 
@@ -69,7 +70,7 @@ class UsuarioControllerImplTest {
     }
 
     @Test
-    @DisplayName("Get Usuario - Lista de Usuários")
+    @DisplayName("Get - Lista de Usuários")
     void whenFindAllThenReturnAListOfUserDTO() {
         when(service.findAll()).thenReturn(List.of(usuario));
         when(model.map(any(), any())).thenReturn(dto);
@@ -91,7 +92,17 @@ class UsuarioControllerImplTest {
 
 
     @Test
+    @DisplayName("Post - Criando um novo Usuário")
     void create() {
+        when(service.create(dto)).thenReturn(usuario);
+        when(model.map(any(), any())).thenReturn(dto);
+
+        var response = controller.create(dto);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertNotNull(response.getHeaders().get("Location"));
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
