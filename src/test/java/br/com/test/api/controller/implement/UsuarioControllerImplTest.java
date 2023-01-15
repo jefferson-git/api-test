@@ -106,7 +106,23 @@ class UsuarioControllerImplTest {
     }
 
     @Test
+    @DisplayName("Put - Atualizando um Usuário")
     void update() {
+        when(service.update(ID, dto)).thenReturn(usuario);
+        when(model.map(any(), any())).thenReturn(dto);
+
+        var response = controller.update(ID, dto);
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UsuarioDto.class, response.getBody().getClass());
+
+        assertEquals(ID, response.getBody().getId());
+        assertEquals(NOME, response.getBody().getNome());
+        assertEquals(EMAIL, response.getBody().getEmail());
+        assertEquals(PASSWORD, response.getBody().getPassword());
     }
 
     @Test
