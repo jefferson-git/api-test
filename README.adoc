@@ -1,0 +1,41 @@
+:source-highlighter: highlightjs
+:numbered:
+:unsafe:
+
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+= Introdução ao Test Driven Development (TDD) com JUnit image:https://junit.org/junit5/assets/img/junit5-logo.png[width=40px] (link:https://[zip])
+
+
+Um projeto de exemplo da aplicação de TDD como processo
+de desenvolvimento de software, utilizando neste caso o paradigma de
+Programação Orientada a Objetos (POO).
+
+== Detalhes do Projeto
+
+Este é um projeto Java comum crud de usuário (API) , mas um projeto do tipo Maven [https://pt.wikipedia.org/wiki/Apache_Maven[1], http://maven.apache.org[2]].
+
+O projeto disponibilizado aqui utiliza o http://junit.org[JUnit 5] para construção e automação de execução de testes unitários e integração. Como o JUnit é uma dependência externa (que não vem disponível com o JDK),
+Veja o link:pom.xml[pom.xml] para identificar as configurações realizadas para utilizar o JUnit 5.
+
+== Estrutura do Projeto
+
+Um projeto Maven em Java tem a seguinte estrutura de pastas:
+
+- link:src/main/java[src/main/java]: pasta onde você deve incluir o código fonte do seu projeto, ou seja, classes e interfaces. Este é o código principal do projeto.
+- link:src/test/java[src/test/java]: pasta onde você deve incluir os testes para o seu projeto. Nesta pasta você incluirá então classes de testes, ou seja, classes contendo métodos para testar o código o código do projeto.
+- target: pasta que será criada quando você compilar o projeto e que pode ser apagada a qualquer momento.
+
+Assim, podemos ter o código principal do projeto na pasta `src/main/java` e o código de testes em `src/test/java`.
+Cada classe de teste deve ser referente a uma classe principal.
+Se a classe principal tiver muitos métodos ou a quantidade de testes para cada um
+destes métodos for muito grande, podemos criar uma classe de teste contendo
+apenas testes para um determinado método da classe sendo testada.
+
