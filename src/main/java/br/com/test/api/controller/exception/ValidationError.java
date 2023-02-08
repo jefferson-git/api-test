@@ -1,9 +1,10 @@
 package br.com.test.api.controller.exception;
 
+import lombok.Getter;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Getter;
 
 @Getter
 public class ValidationError extends StandardError {
@@ -15,7 +16,7 @@ public class ValidationError extends StandardError {
 		this.errors.add(new FieldMessenger(fieldName, message));
 	}
 
-	public ValidationError(Long timestamp, Integer status, String mensage, String urlDocumentation) {
-		super(timestamp, status, mensage, urlDocumentation);
+	public ValidationError(LocalDateTime timestamp, Integer status, String error, String path, String urlDocumentation) {
+		super(timestamp, status, error, path, urlDocumentation);
 	}		
 }

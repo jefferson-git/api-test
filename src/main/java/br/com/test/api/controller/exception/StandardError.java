@@ -1,26 +1,27 @@
 package br.com.test.api.controller.exception;
 
-import java.io.Serializable;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter @Setter
 @SuppressWarnings("serial")
 public class StandardError implements Serializable{
-	
-	private final Long timestamp;
+	private LocalDateTime timestamp;
 	private final Integer status;
-	private final String mensage;
+	private String error;
+	private String path;
 	private final String documentation;
 	
-	public StandardError(Long timestamp, Integer status, String mensage, String urlDocumentation) {
+	public StandardError(LocalDateTime timestamp, Integer status, String error, String path, String urlDocumentation) {
 		this.timestamp = timestamp;
 		this.status = status;
-		this.mensage = mensage;
+		this.error = error;
+		this.path = path;
 		var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String url = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         documentation = url + urlDocumentation;

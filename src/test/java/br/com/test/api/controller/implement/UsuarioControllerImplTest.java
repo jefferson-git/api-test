@@ -50,8 +50,8 @@ class UsuarioControllerImplTest {
 
 
     @Test
-    @DisplayName("Get - Busca por usuário pelo id")
-    void whenFindByIdThenSuccess() {
+    @DisplayName("Get - (Cenário de sucesso) Buscando usuário por id")
+    void findById() {
         when(service.findById(anyInt())).thenReturn(usuario);
         when(model.map(any(), any())).thenReturn(dto);
 
@@ -70,8 +70,8 @@ class UsuarioControllerImplTest {
     }
 
     @Test
-    @DisplayName("Get - Lista de Usuários")
-    void whenFindAllThenReturnAListOfUserDTO() {
+    @DisplayName("Get - (Cenário de sucesso) Listando Usuário")
+    void findAll() {
         when(service.findAll()).thenReturn(List.of(usuario));
         when(model.map(any(), any())).thenReturn(dto);
 
@@ -92,7 +92,7 @@ class UsuarioControllerImplTest {
 
 
     @Test
-    @DisplayName("Post - Criando um novo Usuário")
+    @DisplayName("Post - (Cenário de sucesso) Criando um novo Usuário")
     void create() {
         when(service.create(dto)).thenReturn(usuario);
         when(model.map(any(), any())).thenReturn(dto);
@@ -106,7 +106,7 @@ class UsuarioControllerImplTest {
     }
 
     @Test
-    @DisplayName("Put - Atualizando um Usuário")
+    @DisplayName("Put - (Cenário de sucesso) Atualizando um Usuário")
     void update() {
         when(service.update(ID, dto)).thenReturn(usuario);
         when(model.map(any(), any())).thenReturn(dto);
@@ -126,8 +126,7 @@ class UsuarioControllerImplTest {
     }
 
     @Test
-    @DisplayName("Delete - Deleta Usuário por id")
-
+    @DisplayName("Delete - (Cenário de sucesso) Deletando Usuário por id com sucesso ")
     void delete() {
         doNothing().when(service).delete(anyInt());
         var response = controller.delete(ID);

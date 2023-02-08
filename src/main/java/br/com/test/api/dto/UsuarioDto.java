@@ -3,19 +3,20 @@ package br.com.test.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
-	
+@AllArgsConstructor
+public class UsuarioDto implements Serializable {
+
 	@JsonIgnore
     private Integer id;
 	
@@ -28,5 +29,4 @@ public class UsuarioDto {
     
     @NotBlank(message = "O email é requerido.")
     private String email;
-
 }

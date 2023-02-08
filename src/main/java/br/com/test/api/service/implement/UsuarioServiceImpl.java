@@ -7,13 +7,12 @@ import br.com.test.api.service.UsuarioService;
 import br.com.test.api.service.exception.IntegrityConstraintViolationException;
 import br.com.test.api.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Getter
+
 @Service
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
@@ -33,15 +32,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario create(UsuarioDto dto) {    	
-    	
+    public Usuario create(UsuarioDto dto) {
     	verificaEmail(dto);
         return repository.save(model.map(dto, Usuario.class));
     }
 
     @Override
-    public Usuario update(Integer id, UsuarioDto dto) {      
-    	
+    public Usuario update(Integer id, UsuarioDto dto) {
     	dto.setId(id);       	
     	verificaEmail(dto);    	
         return repository.save(model.map(dto, Usuario.class));
@@ -54,7 +51,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void verificaEmail(UsuarioDto dto) {
-		
 		Optional<Usuario> user = repository.findByEmail(dto.getEmail());		
 		if(user.isPresent() && !user.get().getId().equals(dto.getId())) 
     		throw new IntegrityConstraintViolationException("Esse email já está em uso!");			
